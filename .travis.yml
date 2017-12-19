@@ -1,0 +1,16 @@
+sudo: required
+
+language: python
+
+services:
+  - docker
+
+before_install:
+  - docker build -t riverron/smb-customer-api --no-cache .
+  - docker run -d -p 127.0.0.1:5000:5000 riverron/smb-customer-api
+  - docker ps -a
+
+install: true
+
+script:
+  - curl -v http://127.0.0.1:5000/customers
